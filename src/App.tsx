@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Authentication } from './views/Authentication';
-import { MainPage } from './views/main-page';
+import { Adventure } from './views/Adventure';
+import { Main } from './views/Main';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
 
-  return !token ? <Authentication onToken={setToken} /> : <MainPage token={token} />;
+  return !token ? <Authentication onToken={setToken} /> : <Adventure token={token} adventure="TheBizarreAdventure" />;
 }

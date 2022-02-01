@@ -1,20 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useCreateRoom } from './use-create-room';
 
-function useCreateRoom(token: string) {
-  return async (name: string, adventure: string) => {
-    const response: any = await fetch('http://localhost:3000/room', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token,
-      },
-      body: JSON.stringify({ name: name, adventure: adventure }),
-    });
-    const room = await response.text();
-    console.log(room);
-  };
-}
-function RoomForm({ token }: { token: string }) {
+export function RoomForm({ token }: { token: string }) {
   const [roomName, setRoomName] = useState('');
   const [adventure, setAdventure] = useState('');
 
@@ -60,33 +47,5 @@ function RoomForm({ token }: { token: string }) {
         </div>
       </form>
     </div>
-  );
-}
-export function MainPage({ token }: { token: string }) {
-  const [userInfo, setUserInfo] = useState({ name: '' });
-
-  const getUserInfo = async () => {
-    const response: any = await fetch('http://localhost:3000/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
-
-    const { name } = JSON.parse(await response.text());
-
-    setUserInfo({ name: name ?? 'Error' });
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
-  return (
-    <>
-      <div>your name is {userInfo.name}</div>
-      <RoomForm token={token} />
-    </>
   );
 }
