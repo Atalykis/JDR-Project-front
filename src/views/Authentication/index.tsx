@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 
 import { useRegister } from './use-register';
 import { useLogin } from './use-login';
+import { useNavigate } from 'react-router-dom';
 
 export function Authentication({ onToken }: { onToken: (token: string) => void }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const register = useRegister(onToken);
-  const login = useLogin(onToken);
+  const register = useRegister(onToken, () => goToAdventure());
+  const login = useLogin(onToken, () => goToAdventure());
+
+  const goToAdventure = () => {
+    navigate('/adventure');
+  };
 
   return (
     <div className="w-[100vw] h-[100vh] flex justify-center items-center bg-slate-100">
