@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+type Character = {
+  name: string;
+  owner: string;
+  adventure: string;
+  description: string;
+};
 async function getCharacters(token: string, adventure: string) {
   const response: any = await fetch(`http://localhost:3000/characters?adventure=${adventure}`, {
     method: 'GET',
@@ -22,10 +29,30 @@ function useCharacters(token: string, adventure: string) {
   return characters;
 }
 
+function useJoinRoom(token: string, callback: () => any) {
+  return async (room: string, character: { name: string; owner: string; adventure: string }) => {
+    const response: any = await fetch('http://localhost:3000/join', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify({ room: room, character: character }),
+    });
+    const joined = await response.text();
+    callback();
+  };
+}
+
 export function Adventure({ token, adventure }: { token: string; adventure: string }) {
   const characters = useCharacters(token, adventure);
   const [selected, setSelected] = useState({ name: '', owner: '', adventure: '', description: '' });
+  const navigate = useNavigate();
 
+  const goToRoom = () => {
+    navigate('/room');
+  };
+  const joinRoom = useJoinRoom(token, () => goToRoom());
   return (
     <div>
       <div className="container mx-auto w-4/6 m-3 bg-slate-50">
@@ -47,15 +74,26 @@ export function Adventure({ token, adventure }: { token: string; adventure: stri
             +
           </Link>
         </div>
+        // TODO character selection only work after a second click
         {characters.map((character) => (
-          <div onClick={() => setSelected(character)} className="rounded-lg bg-slate-200 m-1.5 flex-column w-[240px]">
+          <div
+            onClick={() => {
+              setSelected(character);
+              console.log('selected');
+              console.log(selected);
+              console.log("TO SOLVE, DOESN'T WORK ON FIRST CLICK");
+            }}
+            className="rounded-lg bg-slate-200 m-1.5 flex-column w-[240px]"
+          >
             <img className="w-full overflow-hidden rounded-lg" src="https://fakeimg.pl/480x480/"></img>
             <h1 className="text-xl text-primary">{character.name}</h1>
             <p>{character.description}</p>
           </div>
         ))}
       </div>
-      <button onClick={() => joinRoom(character)}>Join The Room</button>
+      <button onClick={() => joinRoom('TheBizarreRoom', { name: selected.name, owner: selected.owner, adventure: selected.adventure })}>
+        Join The Room
+      </button>
     </div>
   );
 }

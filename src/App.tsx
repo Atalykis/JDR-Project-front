@@ -4,6 +4,7 @@ import { Adventure } from './views/Adventure';
 import { CharacterForm } from './views/Adventure/character-form';
 import { Main } from './views/Main';
 import { Route, Routes } from 'react-router-dom';
+import { Room } from './views/Room';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
