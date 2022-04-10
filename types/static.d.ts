@@ -57,3 +57,6 @@ declare module '*.png' {
 }
 
 /* CUSTOM: ADD YOUR OWN HERE */
+declare module 'catenary-curve' {
+  export const Catenary: any;
+}

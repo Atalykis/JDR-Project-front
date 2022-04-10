@@ -5,13 +5,13 @@ export function CharacterToken({ character }: { character: Character }) {
   const token = document.getElementById(character.name + 'token');
   if (token) {
     token.addEventListener('drag', (event) => {
-      token.style.top = event.pageY - 110 + 'px';
-      token.style.left = event.pageX - 20 + 'px';
+      token.style.top = event.pageY + 'px';
+      token.style.left = event.pageX + 'px';
     });
 
     token.addEventListener('dragend', (event) => {
-      token.style.top = event.pageY - 110 + 'px';
-      token.style.left = event.pageX - 20 + 'px';
+      token.style.top = event.pageY + 'px';
+      token.style.left = event.pageX + 'px';
     });
   }
 

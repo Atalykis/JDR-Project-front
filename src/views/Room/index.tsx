@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { useRoomCharacters } from './use-room-character';
-import { Board } from '../Board';
 import { CharacterToken } from '../CharacterToken';
+import { DrawingBoard } from '../Board';
 
 export function Room({ token, room }: { token: string; room: string }) {
-  const [height, setHeight] = useState((window.screen.height * 8) / 10);
-  const [width, setWidth] = useState((window.screen.width * 8) / 10);
-  const characters = useRoomCharacters(token, room);
+  const [id, setId] = useState(0);
+  const { data, loading } = useRoomCharacters(token, room);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return <div>Room not found</div>;
+  }
+
+  console.log(data);
 
   return (
-    <div className="bg-gray-300 w-screen h-screen">
-      <div className={'w-[' + width + 'px] h-[' + height + 'px] relative '}>
-        <Board width={width} height={height} />
-        {characters.map((character) => (
-          <CharacterToken character={character} />
-        ))}
+    <div className="bg-gray-300">
+      {/* {data.room.characters.map((character: any) => (
+        <CharacterToken key={character.name} character={character} />
+      ))} */}
+
+      <button className="button" onClick={() => setId(id + 1)}>
+        reset
+      </button>
+      <div className="p-10">
+        <DrawingBoard key={id} id={id} token={token} room={room} />
       </div>
     </div>
   );
 }
+
+// return (
+//   <>
+//   </>
+// );

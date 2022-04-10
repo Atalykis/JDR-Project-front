@@ -35,6 +35,7 @@ export function Adventure({ token, adventure }: { token: string; adventure: stri
         </div>
         {characters.map((character) => (
           <div
+            key={character.name}
             onClick={() => setSelected(character)}
             className={classnames(
               'rounded-lg bg-slate-200 m-1.5 border-4 flex-column w-[240px] hover:border-indigo-500/100',

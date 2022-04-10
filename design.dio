@@ -1,0 +1,43 @@
+<mxfile host="65bd71144e">
+    <diagram id="ZUDFF6LYXqBa2kMrea9d" name="Page-1">
+        <mxGraphModel dx="1715" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="850" width="850" height="560" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="NO ROOM" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1420" y="280" width="280" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="[ USERNAME ] [ PASSWORD ] [LOGIN]&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;[LOGIN AS ATHERALL]&amp;nbsp; &amp;nbsp;[LOGIN AS ATALYKIS]" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="850" width="850" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="850" y="30" width="190" height="530" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="AventureA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="40" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="AventureB" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="110" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="850" y="400" width="190" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="AventureName" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="870" y="410" width="150" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Create Adventure" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="870" y="530" width="150" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1040" y="30" width="190" height="530" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="RoomA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1050" y="40" width="170" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

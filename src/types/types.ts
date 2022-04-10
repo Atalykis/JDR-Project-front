@@ -4,3 +4,10 @@ export type Character = {
   adventure: string;
   description: string;
 };
+
+export type Position = {
+  x: number;
+  y: number;
+};
+
+export type Point = Position;

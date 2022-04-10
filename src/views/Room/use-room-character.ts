@@ -15,21 +15,13 @@ const CHARACTERS_INFOS = gql`
   }
 `;
 
-async function getRoomCharacters(token: string, name: string) {
-  const { loading, error, data } = await useQuery(CHARACTERS_INFOS, {
-    variables: { name },
+export function useRoomCharacters(token: string, room: string) {
+  return useQuery(CHARACTERS_INFOS, {
+    variables: { name: room },
     context: {
       headers: {
         Authorization: token,
       },
     },
   });
-  return data.room.characters;
-}
-
-export function useRoomCharacters(token: string, room: string) {
-  const [characters, setCharacters] = useState([{ name: '', owner: '', adventure: '', description: '' }]);
-  getRoomCharacters(token, room).then(setCharacters);
-
-  return characters;
 }
