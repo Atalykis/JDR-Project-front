@@ -1,4 +1,7 @@
+import { gql, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
+import { Adventure } from './views/Adventure';
+import { useCharacters } from './views/Adventure/use-characters';
 import { Adventures } from './views/Adventures';
 import { Authentication, Button } from './views/Authentication';
 
@@ -21,6 +24,9 @@ function QuickAuth({ token, onToken }: { token: string; onToken: (token: string)
 
 export default function App() {
   const [token, setToken] = useState('');
+  const [selectedAdventure, setSelectedAdventure] = useState('');
+
+  console.log(selectedAdventure);
 
   return (
     <div>
@@ -28,8 +34,9 @@ export default function App() {
       <QuickAuth token={token} onToken={setToken} />
       <div>
         <h1>Adventures :</h1>
-        <Adventures token={token} />
+        <Adventures token={token} onClick={(adventure: string) => setSelectedAdventure(adventure)} />
       </div>
+      <div>{selectedAdventure && <Adventure token={token} adventure={selectedAdventure} />}</div>
     </div>
   );
 }

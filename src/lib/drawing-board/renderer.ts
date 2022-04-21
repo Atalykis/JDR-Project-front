@@ -27,7 +27,7 @@ export class Renderer {
     const position = brush;
     this.context.beginPath();
     this.styles.applyBrushStyle(this.context);
-    this.context.arc(position.x, position.y, 10, 0, 2 * Math.PI);
+    this.context.arc(position.x, position.y, 5, 0, 2 * Math.PI);
     this.context.fill();
 
     this.context.stroke();
@@ -38,7 +38,7 @@ export class Renderer {
     const position = brush;
     this.context.beginPath();
     this.styles.applyPointerStyle(this.context);
-    this.context.arc(position.x, position.y, 5, 0, 2 * Math.PI);
+    this.context.arc(position.x, position.y, 3, 0, 2 * Math.PI);
     this.context.fill();
     this.context.stroke();
     this.context.closePath();

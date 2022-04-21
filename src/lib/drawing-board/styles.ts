@@ -1,6 +1,6 @@
 export class Styles {
   applyLineStyle(ctx: CanvasRenderingContext2D) {
-    ctx.lineWidth = 20;
+    ctx.lineWidth = 10;
     ctx.strokeStyle = '#000000';
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';

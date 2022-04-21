@@ -4,11 +4,12 @@ interface AdventureCardProps {
     name: string;
     gm: string;
   };
+  onClick: (adventure: string) => void;
 }
 
-export function AdventureCard({ adventure }: AdventureCardProps) {
+export function AdventureCard({ adventure, onClick }: AdventureCardProps) {
   return (
-    <div>
+    <div className="p-4 border" onClick={() => onClick(adventure.name)}>
       <h2>{adventure.name}</h2>
       <p>Masterized by : {adventure.gm}</p>
     </div>

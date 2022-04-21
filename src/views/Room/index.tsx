@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRoomCharacters } from './use-room-character';
 import { CharacterToken } from '../CharacterToken';
 import { DrawingBoard } from '../Board';
+import { Button } from '../Authentication';
 
 export function Room({ token, room }: { token: string; room: string }) {
   const [id, setId] = useState(0);
@@ -22,11 +23,8 @@ export function Room({ token, room }: { token: string; room: string }) {
       {/* {data.room.characters.map((character: any) => (
         <CharacterToken key={character.name} character={character} />
       ))} */}
-
-      <button className="button" onClick={() => setId(id + 1)}>
-        reset
-      </button>
-      <div className="p-10">
+      <Button onClick={() => setId(id + 1)}>Reset</Button>
+      <div className="p-4">
         <DrawingBoard key={id} id={id} token={token} room={room} />
       </div>
     </div>
