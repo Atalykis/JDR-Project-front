@@ -63,6 +63,4 @@ export function useDraw(token: string, room: string) {
   const [draw] = useMutation(DRAW);
 
   return useMemo(() => draw, [draw]);
-
-  // return draw;
 }

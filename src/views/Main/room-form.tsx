@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCreateRoom } from './use-create-room';
+import { useCreateRoom } from '../Rooms/use-create-room';
 
 export function RoomForm({ token }: { token: string }) {
   const [roomName, setRoomName] = useState('');
