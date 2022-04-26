@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Adventure } from './views/Adventure';
-import { useCharacters } from './views/Adventure/use-characters';
+import { useCharacters } from './views/Adventure/hooks/use-characters';
 import { Adventures } from './views/Adventures';
 import { Authentication, Button } from './views/Authentication';
 
