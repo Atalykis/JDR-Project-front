@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Input } from '../Authentication';
 import type { AdventureProps } from './index';
 import { useCreateRoom } from './hooks/use-create-room';
+import { Input } from '../Basic-component/input';
+import { Button } from '../Basic-component/button';
 export function CreateRoomForm({ token, adventure }: AdventureProps) {
   const [roomName, setRoomName] = useState('');
   const createRoom = useCreateRoom();

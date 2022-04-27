@@ -1,3 +1,6 @@
+import { gql, useMutation } from '@apollo/client';
+import { useMemo } from 'react';
+
 export function useLogin(onToken: (token: string) => void, callback: () => any) {
   return async (username: string, password: string) => {
     const response = await fetch('http://localhost:3000/login', {
@@ -15,3 +18,17 @@ export function useLogin(onToken: (token: string) => void, callback: () => any) 
     }
   };
 }
+
+// const LOGIN = gql`
+//   mutation UserLogin($username: String!, $password: String!) {
+//     login(username: $username, password: $password) {
+//       token
+//     }
+//   }
+// `;
+
+// export function useLogin() {
+//   const [login] = useMutation(LOGIN);
+
+//   return useMemo(() => login, [login]);
+// }

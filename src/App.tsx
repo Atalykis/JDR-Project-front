@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { Adventure } from './views/Adventure';
 import { useCharacters } from './views/Adventure/hooks/use-characters';
 import { Adventures } from './views/Adventures';
-import { Authentication, Button } from './views/Authentication';
+import { Authentication } from './views/Authentication';
+import { Button } from './views/Basic-component/button';
 
 const AetherallToken =
   '713b4876600c9f3a66746122a80f7689d0263aa4e5e926b8b7f79de8434dcc06b299236075ec3a6b1bb3ca1e0371051bcbedeb2545fa3c00ffd0e2b59bb1b301c90c487e1ff001d448a7ca171defb47928dec98f1ea1373a1d5b5087bf8d35e05292a42c9ab90d6f6a';

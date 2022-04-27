@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Input } from '../Authentication';
 import { useCreateCharacter } from './hooks/use-create-character';
+import { Input } from '../Basic-component/input';
+import { Button } from '../Basic-component/button';
 
 export const CharacterForm = ({ token, adventure }: { token: string; adventure: string }) => {
   const [characterName, setName] = useState('');

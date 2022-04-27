@@ -5,9 +5,11 @@ import React from "react";
 import type { Character } from "src/types/types";
 
 
-export interface AdventureCharactersProps extends AdventureProps {}
+export interface AdventureCharactersProps extends AdventureProps {
+  select: (character: Character) => void;
+}
 
-export function AdventureCharacters({ token, adventure }: AdventureCharactersProps) {
+export function AdventureCharacters({ token, adventure, select }: AdventureCharactersProps) {
   const {loading, data} = useCharacters(token, adventure);
 
   if (loading) {
@@ -24,7 +26,7 @@ export function AdventureCharacters({ token, adventure }: AdventureCharactersPro
       <ul>
         {data.characters.map((character: Character) => {
           return (
-            <li key={character.name}>
+            <li key={character.name} onClick={() => select(character)}>
               <CharacterCard character={character} />
             </li>
           );

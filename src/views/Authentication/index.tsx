@@ -3,25 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useRegister } from './use-register';
 import { useLogin } from './use-login';
 import { useNavigate } from 'react-router-dom';
-import classNames from 'classnames';
+import { Input } from '../Basic-component/input';
+import { Button } from '../Basic-component/button';
 
-export const Input = (props: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
-  const className = classNames(
-    props.className,
-    'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-  );
-
-  return <input {...props} className={className} />;
-};
-
-export const Button = (props: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
-  const className = classNames(
-    props.className,
-    'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline',
-  );
-
-  return <button {...props} className={className} />;
-};
 
 export function Authentication({ onToken }: { onToken: (token: string) => void }) {
   const [username, setUsername] = useState('');

@@ -1,3 +1,6 @@
+import { gql, useMutation } from '@apollo/client';
+import { useMemo } from 'react';
+
 export function useRegister(onToken: (token: string) => void, callback: () => any) {
   return async (username: string, password: string) => {
     const response = await fetch('http://localhost:3000/register', {
@@ -15,3 +18,17 @@ export function useRegister(onToken: (token: string) => void, callback: () => an
     }
   };
 }
+
+// const REGISTER = gql`
+//   mutation UserRegistration($username: String!, $password: String!) {
+//     register(username: $username, password: $password) {
+//       username
+//     }
+//   }
+// `;
+
+// export function useRegister() {
+//   const [register] = useMutation(REGISTER);
+
+//   return useMemo(() => register, [register]);
+// }
