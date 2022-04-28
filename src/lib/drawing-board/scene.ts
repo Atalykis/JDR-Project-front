@@ -4,7 +4,7 @@ import { Styles } from './styles';
 import { closeable } from './utils';
 import { Line, LineEditable } from './values';
 
-export class Scene {
+export class DrawingScene {
   private styles = new Styles();
   private renderer: Renderer;
   private board: Board;
