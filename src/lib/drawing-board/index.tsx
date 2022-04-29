@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from 'react';
+import type { Line } from './drawables/line';
+import { Token, TokenEditable } from './drawables/token';
 import { Scene } from './scene';
-import type { Line } from './values';
+
+
 
 interface DrawingBoardProps {
   id: number;

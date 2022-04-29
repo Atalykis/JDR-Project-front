@@ -1,5 +1,10 @@
 import { LazyBrush } from 'lazy-brush';
-import { Line, Position, LineEditable } from './values';
+import { BrushEditable } from './drawables/brush';
+import { ChainEditable } from './drawables/chain';
+import { Line, LineEditable } from './drawables/line';
+import { PointerEditable } from './drawables/pointer';
+import { Token, TokenEditable } from './drawables/token';
+import type { Position } from './values';
 
 export class Board {
   private lazyBrush = new LazyBrush({
@@ -11,8 +16,13 @@ export class Board {
   public currentLine: LineEditable | undefined;
   public last: LineEditable | undefined;
 
-  constructor(private readonly onDraw: (line: Line) => void, lines: Line[] = []) {
+  public tokens: TokenEditable[];
+
+  public currentToken: TokenEditable | undefined;
+
+  constructor(private readonly onDraw: (line: Line) => void, lines: Line[] = [], tokens: Token[] = []) {
     this.lines = lines.map((line) => new LineEditable(line.points));
+    this.tokens = tokens.map((token) => new TokenEditable(token.position, token.size, token.image));
   }
 
   startLine(position: Position) {
@@ -32,15 +42,35 @@ export class Board {
     this.currentLine = undefined;
   }
 
+  startMoveToken(token: TokenEditable, position: Position) {
+    this.currentToken = token;
+    this.moveToken(position);
+  }
+
+  endMoveToken(position: Position) {
+    this.moveToken(position);
+    this.currentToken = undefined;
+  }
+
+  moveToken(position: Position) {
+    this.currentToken?.move(position);
+  }
+
   updateBrush(position: Position) {
     this.lazyBrush.update(position);
   }
 
   get brush() {
-    return this.lazyBrush.getBrushCoordinates();
+    return new BrushEditable(this.lazyBrush.getBrushCoordinates());
   }
 
   get pointer() {
-    return this.lazyBrush.getPointerCoordinates();
+    return new PointerEditable(this.lazyBrush.getPointerCoordinates());
+  }
+
+  get chain() {
+    const brush = this.lazyBrush.getBrushCoordinates();
+    const pointer = this.lazyBrush.getPointerCoordinates();
+    return new ChainEditable(brush, pointer);
   }
 }

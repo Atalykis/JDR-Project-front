@@ -3,14 +3,7 @@ export interface Position {
   y: number;
 }
 
-export interface Line {
-  points: Position[];
-}
-
-export class LineEditable implements Line {
-  constructor(public points: Position[] = []) {}
-
-  addPoint(point: Position) {
-    this.points.push(point);
-  }
+export interface Size {
+  width: number;
+  height: number;
 }

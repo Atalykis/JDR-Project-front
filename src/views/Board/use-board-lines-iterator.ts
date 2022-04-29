@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { io } from 'socket.io-client';
-import type { Line } from 'src/lib/drawing-board/values';
+import type { Line } from 'src/lib/drawing-board/drawables/line';
 import { Queue } from './queue';
 
 export function useBoardLinesIterator(token: string) {
