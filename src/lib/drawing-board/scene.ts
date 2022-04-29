@@ -1,23 +1,26 @@
 import { Board } from './board';
+import { Line, LineEditable } from './drawables/line';
+import { Token, TokenEditable } from './drawables/token';
 import { Renderer } from './renderer';
-import { Styles } from './styles';
 import { closeable } from './utils';
-import { Line, LineEditable } from './values';
+import type { Position } from './values';
 
-export class DrawingScene {
-  private styles = new Styles();
+const characterToken = new TokenEditable({ x: 10, y: 10 }, { width: 50, height: 50 }, new Image(50, 50));
+characterToken.image.src = 'https://dummyimage.com/50x50/000/ffffff';
+export class Scene {
   private renderer: Renderer;
   private board: Board;
   private closeableListen?: AsyncIterableIterator<Line> & { close: () => Promise<void> };
 
+  private tokens: Token[] = [characterToken];
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly onDraw: (line: Line) => void = () => {},
     private lines: Line[],
     private listen?: AsyncIterableIterator<Line>,
   ) {
-    this.board = new Board(this.onDraw, this.lines);
-    this.renderer = new Renderer(this.styles, this.canvas);
+    this.board = new Board(this.onDraw, this.lines, this.tokens);
+    this.renderer = new Renderer(this.canvas);
     canvas.addEventListener('mousedown', this.onMouseDown);
     canvas.addEventListener('mouseup', this.onMouseUp);
     canvas.addEventListener('mousemove', this.onMouseMove);
@@ -42,30 +45,56 @@ export class DrawingScene {
 
   onMouseDown = (event: MouseEvent) => {
     event.preventDefault();
-    this.board.updateBrush(this.capture(event));
-    this.board.startLine(this.board.brush);
-  };
-
-  onMouseUp = (event: MouseEvent) => {
-    event.preventDefault();
-
-    this.board.endLine(this.board.brush);
+    const mousePosition = this.capture(event);
+    const token = this.tokenPresence(mousePosition);
+    if (token) {
+      this.board.startMoveToken(token, mousePosition);
+    } else {
+      this.board.updateBrush(mousePosition);
+      this.board.startLine(this.board.brush.position);
+    }
   };
 
   onMouseMove = (event: MouseEvent) => {
     event.preventDefault();
-    this.board.updateBrush(this.capture(event));
-    this.board.continueLine(this.board.brush);
-    this.render();
+    if (this.board.currentToken) {
+      this.board.moveToken(this.capture(event));
+      this.render();
+    } else {
+      this.board.updateBrush(this.capture(event));
+      this.board.continueLine(this.board.brush.position);
+      this.render();
+    }
   };
+  onMouseUp = (event: MouseEvent) => {
+    event.preventDefault();
+    if (this.board.currentToken) {
+      this.board.endMoveToken(this.capture(event));
+      this.render();
+    } else {
+      this.board.endLine(this.board.brush.position);
+      this.render();
+    }
+  };
+
+  tokenPresence(mousePosition: Position) {
+    for (const token of this.board.tokens) {
+      if (mousePosition.x < token.position.x || mousePosition.y < token.position.y) return;
+      if (mousePosition.x > token.position.x + token.size.width || mousePosition.y > token.position.y + token.size.height) return;
+      return token;
+    }
+  }
 
   render() {
     this.renderer.clear();
-    this.renderer.drawLine(this.board.currentLine!);
-    this.renderer.drawBrush(this.board.brush);
-    this.renderer.drawPointer(this.board.pointer);
-    this.renderer.drawChain(this.board.brush, this.board.pointer);
-    this.renderer.drawLines(this.board.lines);
+    this.renderer.draw(this.board.chain);
+    this.renderer.draw(this.board.pointer);
+    this.renderer.draw(this.board.brush);
+    if (this.board.currentLine) {
+      this.renderer.draw(this.board.currentLine);
+    }
+    this.renderer.drawMany([...this.board.lines]);
+    this.renderer.drawMany([...this.board.tokens]);
   }
 
   destroy() {
