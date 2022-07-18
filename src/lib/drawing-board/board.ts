@@ -20,7 +20,12 @@ export class Board {
 
   public currentToken: TokenEditable | undefined;
 
-  constructor(private readonly onDraw: (line: Line) => void, lines: Line[] = [], tokens: Token[] = []) {
+  constructor(
+    private readonly onDraw: (line: Line) => void,
+    private readonly onTokenMove: (token: Token) => void,
+    lines: Line[] = [],
+    tokens: Token[] = [],
+  ) {
     this.lines = lines.map((line) => new LineEditable(line.points));
     this.tokens = tokens.map((token) => new TokenEditable(token.position, token.size, token.image));
   }
@@ -49,6 +54,7 @@ export class Board {
 
   endMoveToken(position: Position) {
     this.moveToken(position);
+    this.onTokenMove(this.currentToken!);
     this.currentToken = undefined;
   }
 

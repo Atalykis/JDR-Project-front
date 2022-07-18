@@ -1,32 +1,35 @@
 import { Board } from './board';
 import { Line, LineEditable } from './drawables/line';
-import { Token, TokenEditable } from './drawables/token';
+import type { Token } from './drawables/token';
 import { Renderer } from './renderer';
 import { closeable } from './utils';
 import type { Position } from './values';
 
-const characterToken = new TokenEditable({ x: 10, y: 10 }, { width: 50, height: 50 }, new Image(50, 50));
-characterToken.image.src = 'https://dummyimage.com/50x50/000/ffffff';
 export class Scene {
   private renderer: Renderer;
   private board: Board;
-  private closeableListen?: AsyncIterableIterator<Line> & { close: () => Promise<void> };
+  private closeableLineListen?: AsyncIterableIterator<Line> & { close: () => Promise<void> };
 
-  private tokens: Token[] = [characterToken];
+  private closeableTokenListen?: AsyncIterableIterator<Token> & { close: () => Promise<void> };
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly onDraw: (line: Line) => void = () => {},
+
+    private readonly onTokenMove: (token: Token) => void = () => {},
     private lines: Line[],
-    private listen?: AsyncIterableIterator<Line>,
+
+    private tokens: Token[],
+    private lineListen?: AsyncIterableIterator<Line>,
+    private tokenListen?: AsyncIterableIterator<Token>,
   ) {
-    this.board = new Board(this.onDraw, this.lines, this.tokens);
+    this.board = new Board(this.onDraw, this.onTokenMove, this.lines, this.tokens);
     this.renderer = new Renderer(this.canvas);
     canvas.addEventListener('mousedown', this.onMouseDown);
     canvas.addEventListener('mouseup', this.onMouseUp);
     canvas.addEventListener('mousemove', this.onMouseMove);
     this.render();
-    if (this.listen) {
-      this.closeableListen = closeable(this.listen);
+    if (this.lineListen) {
+      this.closeableLineListen = closeable(this.lineListen);
       this.watchLines();
       this.render();
     }
@@ -101,14 +104,15 @@ export class Scene {
     this.canvas.removeEventListener('mousedown', this.onMouseDown);
     this.canvas.removeEventListener('mouseup', this.onMouseUp);
     this.canvas.removeEventListener('mousemove', this.onMouseMove);
-    this.closeableListen?.close();
+    this.closeableLineListen?.close();
+    this.closeableTokenListen?.close();
   }
 
   async watchLines() {
-    if (!this.closeableListen) {
+    if (!this.closeableLineListen) {
       return;
     }
-    for await (const lineInput of this.closeableListen) {
+    for await (const lineInput of this.closeableLineListen) {
       const line = new LineEditable();
       this.board.lines.push(line);
       for (const point of lineInput.points) {

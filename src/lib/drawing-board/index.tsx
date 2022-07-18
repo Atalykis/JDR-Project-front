@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import type { Line } from './drawables/line';
-import { Token, TokenEditable } from './drawables/token';
+import  type { Token } from './drawables/token';
 import { Scene } from './scene';
 
 
@@ -8,18 +8,26 @@ import { Scene } from './scene';
 interface DrawingBoardProps {
   id: number;
   lines: Line[];
+
+  tokens: Token[]
   onDraw?: (line: Line) => void;
-  listen?: AsyncIterableIterator<Line>;
+
+  OnTokenMove?: (token: Token) => void
+
+
+  linesListen?: AsyncIterableIterator<Line>;
+
+  tokensListen?: AsyncIterableIterator<Token>;
 }
 
-export function DrawingBoard({ id, onDraw, lines, listen }: DrawingBoardProps) {
+export function DrawingBoard({ id, onDraw, OnTokenMove, lines, tokens, linesListen, tokensListen }: DrawingBoardProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!canvas.current) return;
-    const scene = new Scene(canvas.current, onDraw, lines, listen);
+    const scene = new Scene(canvas.current, onDraw, OnTokenMove, lines, tokens, linesListen, tokensListen);
     return () => scene.destroy();
-  }, [canvas, id, onDraw, lines, listen]);
+  }, [canvas, id, onDraw, OnTokenMove, lines, tokens, linesListen, tokensListen]);
 
   return <canvas className="w-[800px] h-[800px] border cursor-none" width={800} height={800} ref={canvas}></canvas>;
 }
