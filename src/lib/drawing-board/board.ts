@@ -27,7 +27,7 @@ export class Board {
     tokens: Token[] = [],
   ) {
     this.lines = lines.map((line) => new LineEditable(line.points));
-    this.tokens = tokens.map((token) => new TokenEditable(token.position, token.size, token.image));
+    this.tokens = tokens.map((token) => new TokenEditable(token.id, token.position, token.size, token.imageSrc));
   }
 
   startLine(position: Position) {
@@ -37,6 +37,7 @@ export class Board {
 
   continueLine(position: Position) {
     this.currentLine?.addPoint(position);
+
   }
 
   endLine(position: Position) {

@@ -11,3 +11,8 @@ export type Position = {
 };
 
 export type Point = Position;
+
+export type Size = {
+  width: number
+  height: number
+}

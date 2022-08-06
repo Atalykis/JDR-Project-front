@@ -59,16 +59,16 @@ export function closeable<T, U>(
   } as any;
 }
 
-// export async function* linemaker() {
-//   let i = 0;
-//   while (true) {
-//     await new Promise((r) => setTimeout(r, 1000));
+export async function* linemaker() {
+  let i = 0;
+  while (true) {
+    await new Promise((r) => setTimeout(r, 1000));
 
-//     const points = [...Array(100)].map((_, j) => ({ x: i * 10 + j * 2, y: j * 2 }));
+    const points = [...Array(100)].map((_, j) => ({ x: i * 10 + j * 2, y: j * 2 }));
 
-//     yield {
-//       points: points,
-//     };
-//     i++;
-//   }
-// }
+    yield {
+      points: points,
+    };
+    i++;
+  }
+}

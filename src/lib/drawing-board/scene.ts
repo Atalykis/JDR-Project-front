@@ -28,11 +28,12 @@ export class Scene {
     canvas.addEventListener('mouseup', this.onMouseUp);
     canvas.addEventListener('mousemove', this.onMouseMove);
     this.render();
-    if (this.lineListen) {
-      this.closeableLineListen = closeable(this.lineListen);
-      this.watchLines();
-      this.render();
-    }
+    if (!this.lineListen) return
+    if (!this.tokenListen) return
+    this.closeableLineListen = closeable(this.lineListen);
+    this.closeableTokenListen = closeable(this.tokenListen);
+    Promise.all([this.watchLines(),this.watchTokens()])
+    this.render()
   }
 
   capture(event: MouseEvent) {
@@ -82,8 +83,8 @@ export class Scene {
 
   tokenPresence(mousePosition: Position) {
     for (const token of this.board.tokens) {
-      if (mousePosition.x < token.position.x || mousePosition.y < token.position.y) return;
-      if (mousePosition.x > token.position.x + token.size.width || mousePosition.y > token.position.y + token.size.height) return;
+      if (mousePosition.x < token.position.x || mousePosition.y < token.position.y) continue;
+      if (mousePosition.x > token.position.x + token.size.width || mousePosition.y > token.position.y + token.size.height) continue;
       return token;
     }
   }
@@ -109,10 +110,9 @@ export class Scene {
   }
 
   async watchLines() {
-    if (!this.closeableLineListen) {
-      return;
-    }
+    if (!this.closeableLineListen) return;
     for await (const lineInput of this.closeableLineListen) {
+      console.log('line received')
       const line = new LineEditable();
       this.board.lines.push(line);
       for (const point of lineInput.points) {
@@ -120,6 +120,17 @@ export class Scene {
         this.render();
         await new Promise((r) => setTimeout(r, 5));
       }
+    }
+  }
+
+  async watchTokens() {
+    if (!this.closeableTokenListen) return;
+    for await (const tokenInput of this.closeableTokenListen) {
+      console.log('token received')
+      const token = this.board.tokens.find((token) => token.id.adventure === tokenInput.id.adventure && token.id.name === tokenInput.id.name && token.id.owner === tokenInput.id.owner )
+      if(!token) continue
+      token.move(tokenInput.position)
+      this.render();
     }
   }
 }

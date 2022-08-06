@@ -9,7 +9,7 @@ import { Button } from './views/Basic-component/button';
 const AetherallToken =
   '713b4876600c9f3a66746122a80f7689d0263aa4e5e926b8b7f79de8434dcc06b299236075ec3a6b1bb3ca1e0371051bcbedeb2545fa3c00ffd0e2b59bb1b301c90c487e1ff001d448a7ca171defb47928dec98f1ea1373a1d5b5087bf8d35e05292a42c9ab90d6f6a';
 const AtalykisToken =
-  '9ceae0f5ee7bdbd23c830713e7ab0086a64ffc8555ff4acfb03c6b44221b875886606524f38cfda83c39d19128153407bcdfc45ad6693e00c30aa0973a36d6943a80456cb33c0589ef3b8bd9d107dfd422540d4b80aaecc7c237ece4d84cf2b238226c0c4d8dd21f';
+  '42c3cd40e754247c254c7d1c46ff22fbcfbffbaf6bb713c8940341ee809053566e6cbb56265945880c5c04e67fffb4c55667235d3911dba4c43ef1f03f16bce0ed445fe8b92d3fdef65df422ef8a29e63128ec6b078a10e932593c7a6f12f00c775c39771efe9d7f';
 
 function QuickAuth({ token, onToken }: { token: string; onToken: (token: string) => void }) {
   const currently = token === AetherallToken ? 'Aetherall' : token === AtalykisToken ? 'Atalykis' : undefined;
@@ -27,7 +27,6 @@ export default function App() {
   const [token, setToken] = useState('');
   const [selectedAdventure, setSelectedAdventure] = useState('');
 
-  console.log(selectedAdventure);
 
   return (
     <div>

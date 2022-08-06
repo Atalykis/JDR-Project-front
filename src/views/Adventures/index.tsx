@@ -14,7 +14,6 @@ export function Adventures({ token, onClick }: { token: string; onClick: (advent
     return <div>No Adventures Found</div>;
   }
 
-  console.log(data);
 
   return (
     <>

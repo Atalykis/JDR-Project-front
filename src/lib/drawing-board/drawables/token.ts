@@ -1,13 +1,25 @@
 import type { Position, Size } from '../values';
 
+interface TokenId {
+  name: string;
+  owner: string;
+  adventure:string;
+}
+
 export interface Token {
+  id: TokenId
   position: Position;
   size: Size;
-  image: HTMLImageElement;
+  image?: HTMLImageElement;
+  imageSrc: string
 }
 
 export class TokenEditable implements Drawable<Token> {
-  constructor(public position: Position, public size: Size, public image: HTMLImageElement) {}
+  public image : HTMLImageElement
+  constructor(public id: TokenId, public position: Position, public size: Size, public imageSrc: string) {
+    this.image = new Image(50,50)
+    this.image.src = imageSrc
+  }
 
   draw(context: CanvasRenderingContext2D): void {
     context.beginPath();
