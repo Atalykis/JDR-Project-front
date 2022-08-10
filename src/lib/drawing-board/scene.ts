@@ -109,6 +109,14 @@ export class Scene {
     this.closeableTokenListen?.close();
   }
 
+  defineLines(lines: Line[]){
+    this.lines = lines
+  }
+
+  defineTokens(tokens: Token[]){
+    this.tokens = tokens
+  }
+
   async watchLines() {
     if (!this.closeableLineListen) return;
     for await (const lineInput of this.closeableLineListen) {

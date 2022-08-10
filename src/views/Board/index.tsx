@@ -51,5 +51,6 @@ export function DrawingBoard({ id, token, room }: { id: number; token: string; r
       return <div>Board not found</div>;
     }
 
+    console.log(data.board.tokens)
   return <DB id={id} onDraw={onDraw} OnTokenMove={onMove} lines={data.board.lines} tokens={data.board.tokens} linesListen={linesListen} tokensListen={tokensListen} />;
 }
